@@ -1,6 +1,4 @@
-const User = require("../models/user");
-const Role = require('../models/role');
-const { response } = require("express");
+const { User, Role, Post } = require('../models');
 
 const isValidRole = async( role = '' ) => {
     const existRol = await Role.findOne({ role });
@@ -24,8 +22,16 @@ const existUserById = async( id = '' ) => {
     }
 }
 
+const existPostById = async( id = '' ) => {
+    const existPost = await Post.findById( id );
+    if ( !existPost ) {
+        throw new Error(`The id ${ id } not found`);
+    }
+}
+
 module.exports = {
     isValidRole,
     emailExist,
-    existUserById
+    existUserById,
+    existPostById,
 }
